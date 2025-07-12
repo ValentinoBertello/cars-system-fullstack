@@ -1,0 +1,103 @@
+<div class="step-container">
+
+    <!-- cuadrito con credenciales demo con datos ya cargados -->
+    <div class="demo-creds">
+        <!-- titulo del cuadro -->
+        <div class="demo-header">
+            <div class="demo-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="demo-title">Acceso Demo</h3>
+        </div>
+        <!-- Los datos de la cuenta -->
+        <div class="demo-info">
+            <p><strong>Email: </strong> <span class="demo-email">demo&#64;gmail.com</span></p>
+            <p><strong>Contraseña: </strong> <span class="demo-password">123456</span></p>
+        </div>
+    </div>
+
+    <!-- Spinner de carga -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Formulario reactivo que apuntara al login -->
+    <form [formGroup]="formReactivo" (ngSubmit)="onSubmitForm()" class="login-form">
+
+        <h2 class="step-title">Iniciar Sesión</h2>
+        
+        <!-- Label e input del campo EMAIL -->
+        <div class="row mt-1">
+            <div class="col-md-12 mb-2">
+
+                <label for="email" class="form-label" style="font-weight: 500;">Correo Electrónico</label>
+
+                <input id="email" type="text" class="form-control shadow-sm" formControlName="email"
+                    [ngClass]="{'is-invalid': formReactivo.get('email')?.invalid && formReactivo.get('email')?.touched}">
+                @if(formReactivo.get('email')?.invalid && formReactivo.get('email')?.touched) {
+                @if(formReactivo.get('email')?.hasError('required')) {
+                <div class="text-danger align-self-end" style="width: 500px;">Email requerido</div>
+                }
+                @if(formReactivo.get('email')?.hasError('email')) {
+                <div class="text-danger align-self-end" style="width: 500px;">Email inválido</div>
+                }
+                }
+
+
+
+            </div>
+        </div>
+
+        <!-- Label e input del campo CONTRASEÑA -->
+        <div class="row mt-1">
+            <div class="mb-2">
+
+
+                <label for="pas" class="form-label" style="font-weight: 500;">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-orange border-brown">
+                        <i class="fas fa-lock text-brown"></i>
+                    </span>
+
+                    <input id="pas" [type]="mostrarPassword ? 'text' : 'password'" class="form-control shadow-sm"
+                        placeholder="" formControlName="password"
+                        [ngClass]="{'is-invalid': formReactivo.get('password')?.invalid && formReactivo.get('password')?.touched}">
+                    <button class="btn btn-outline-brown" type="button" (click)="mostrarPassword = !mostrarPassword">
+                        <i class="fas {{ mostrarPassword ? 'fa-eye-slash' : 'fa-eye' }}"></i>
+                    </button>
+
+
+                </div>
+                @if(formReactivo.get('password')?.invalid && formReactivo.get('password')?.touched) {
+                @if(formReactivo.get('password')?.hasError('required')) {
+                <div class="text-danger align-self-end" style="width: 500px;">Contraseña requerida</div>
+                }
+                }
+            </div>
+        </div>
+
+
+        <!-- Submit Button -->
+        <button [disabled]="formReactivo.invalid" type="submit" class="btn btn-block custom-btn w-100 mb-3 mt-2">
+            Ingresar
+        </button>
+
+        <!-- Registration Link -->
+        <p class="text-center mt-2" style="color: #000000;">
+            ¿No tienes cuenta?
+            <a routerLink="/create-user" routerLinkActive="router-link-active" class="links"
+                >Regístrate
+                aquí</a>
+        </p>
+
+        <!-- Olvidé mi clave Link -->
+        <p class="text-center mt-3" style="color: #000000;">
+            ¿Olvidaste tu contraseña?
+            <a routerLink="/forgot-password" class="links">Recupérala aquí</a>
+        </p>
+
+    </form>
+
+</div>
