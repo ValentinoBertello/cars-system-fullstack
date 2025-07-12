@@ -1,0 +1,79 @@
+CREATE DATABASE IF NOT EXISTS car_sys_bd;
+USE car_sys_bd;
+
+CREATE TABLE roles (
+    id BIGINT  PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+
+INSERT INTO roles (name) VALUES
+('ROLE_ADMIN'),
+('ROLE_ENCARGADO');
+
+CREATE TABLE users (
+    id BIGINT  PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE users_roles (
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE brands (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE models (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    brand_id BIGINT NOT NULL,
+    FOREIGN KEY (brand_id) REFERENCES brands(id),
+    UNIQUE (name, brand_id)
+);
+
+CREATE TABLE cars (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    license_plate VARCHAR(20) NOT NULL UNIQUE,
+    model_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    year INT NOT NULL,
+    color VARCHAR(30),
+    base_price DECIMAL(10,2) NOT NULL,
+    mileage DECIMAL(10,2) NOT NULL,
+    status VARCHAR(30),
+    FOREIGN KEY (model_id) REFERENCES models(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE clients (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20),
+    dni VARCHAR(20) NOT NULL UNIQUE,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE sales (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    car_id BIGINT NOT NULL,
+    client_id BIGINT NOT NULL,
+    sale_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    sale_price DECIMAL(10,2) NOT NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (car_id)          REFERENCES cars(id),
+    FOREIGN KEY (client_id)       REFERENCES clients(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
