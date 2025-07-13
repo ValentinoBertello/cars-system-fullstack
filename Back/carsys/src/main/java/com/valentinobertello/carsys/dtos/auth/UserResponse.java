@@ -1,4 +1,4 @@
-package com.valentinobertello.carsys.dtos;
+package com.valentinobertello.carsys.dtos.auth;
 
 
 

@@ -1,12 +1,13 @@
-package com.valentinobertello.carsys.service;
+package com.valentinobertello.carsys.service.impl;
 
-import com.valentinobertello.carsys.dtos.UserRequest;
-import com.valentinobertello.carsys.dtos.UserResponse;
+import com.valentinobertello.carsys.dtos.auth.UserRequest;
+import com.valentinobertello.carsys.dtos.auth.UserResponse;
 import com.valentinobertello.carsys.entities.auth.RoleEntity;
 import com.valentinobertello.carsys.entities.auth.UserEntity;
 import com.valentinobertello.carsys.mapper.UserDataMapper;
-import com.valentinobertello.carsys.repository.RoleRepository;
-import com.valentinobertello.carsys.repository.UserRepository;
+import com.valentinobertello.carsys.repository.auth.RoleRepository;
+import com.valentinobertello.carsys.repository.auth.UserRepository;
+import com.valentinobertello.carsys.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
  * de la aplicación.
  * **/
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserDataMapper userDataMapper;
     private final UserRepository userRepository;

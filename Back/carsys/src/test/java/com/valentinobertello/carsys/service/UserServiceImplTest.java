@@ -1,9 +1,10 @@
 package com.valentinobertello.carsys.service;
 
-import com.valentinobertello.carsys.dtos.UserResponse;
+import com.valentinobertello.carsys.dtos.auth.UserResponse;
 import com.valentinobertello.carsys.mapper.UserDataMapper;
-import com.valentinobertello.carsys.repository.RoleRepository;
-import com.valentinobertello.carsys.repository.UserRepository;
+import com.valentinobertello.carsys.repository.auth.RoleRepository;
+import com.valentinobertello.carsys.repository.auth.UserRepository;
+import com.valentinobertello.carsys.service.impl.UserServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

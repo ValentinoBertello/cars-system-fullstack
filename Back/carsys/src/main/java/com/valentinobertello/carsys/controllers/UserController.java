@@ -1,7 +1,7 @@
 package com.valentinobertello.carsys.controllers;
 
-import com.valentinobertello.carsys.dtos.UserRequest;
-import com.valentinobertello.carsys.dtos.UserResponse;
+import com.valentinobertello.carsys.dtos.auth.UserRequest;
+import com.valentinobertello.carsys.dtos.auth.UserResponse;
 import com.valentinobertello.carsys.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

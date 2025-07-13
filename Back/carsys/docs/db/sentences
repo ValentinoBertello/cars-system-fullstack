@@ -51,6 +51,7 @@ CREATE TABLE cars (
     base_price DECIMAL(10,2) NOT NULL,
     mileage DECIMAL(10,2) NOT NULL,
     status VARCHAR(30),
+    registration_date DATE NOT NULL,
     FOREIGN KEY (model_id) REFERENCES models(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -77,3 +78,24 @@ CREATE TABLE sales (
     FOREIGN KEY (client_id)       REFERENCES clients(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- Insertamos las marcas
+INSERT INTO brands (name) VALUES
+  ('Ford'),
+  ('Chevrolet'),
+  ('Jeep');
+
+INSERT INTO models (name, brand_id)
+  SELECT 'Fiesta',   id FROM brands WHERE name = 'Ford';
+INSERT INTO models (name, brand_id)
+  SELECT 'Focus',    id FROM brands WHERE name = 'Ford';
+
+INSERT INTO models (name, brand_id)
+  SELECT 'Camaro',     id FROM brands WHERE name = 'Chevrolet';
+INSERT INTO models (name, brand_id)
+  SELECT 'Silverado',  id FROM brands WHERE name = 'Chevrolet';
+
+INSERT INTO models (name, brand_id)
+  SELECT 'Wrangler',       id FROM brands WHERE name = 'Jeep';
+INSERT INTO models (name, brand_id)
+  SELECT 'Grand Cherokee', id FROM brands WHERE name = 'Jeep';

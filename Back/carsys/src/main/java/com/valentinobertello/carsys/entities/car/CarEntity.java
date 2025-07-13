@@ -1,6 +1,7 @@
 package com.valentinobertello.carsys.entities.car;
 
 import com.valentinobertello.carsys.entities.auth.UserEntity;
+import com.valentinobertello.carsys.enums.CarStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
+/**
+ * Entidad que representa un vehículo en el sistema.
+ */
 @Entity
 @Table(name = "cars")
 @Data
@@ -45,6 +50,10 @@ public class CarEntity {
     private BigDecimal mileage;
 
     @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private CarStatus status;
+
+    @Column(name = "registration_date")
+    private LocalDate registrationDate;
 }
 

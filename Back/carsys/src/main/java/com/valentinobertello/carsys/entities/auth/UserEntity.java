@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Entidad que representa a un usuario del sistema.
+ * Relación ManyToMany con RoleEntity mediante tabla intermedia "users_roles".
+ */
 @Entity
 @Table(name = "users")
 @Data

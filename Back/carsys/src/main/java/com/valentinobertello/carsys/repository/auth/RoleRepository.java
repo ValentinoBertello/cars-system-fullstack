@@ -1,4 +1,4 @@
-package com.valentinobertello.carsys.repository;
+package com.valentinobertello.carsys.repository.auth;
 
 import com.valentinobertello.carsys.entities.auth.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

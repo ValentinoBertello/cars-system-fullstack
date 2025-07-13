@@ -68,8 +68,11 @@ public class SpringSecurityConfig {
                             .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.GET,"/users/email/**").permitAll()
                             .requestMatchers(HttpMethod.GET,"/users/check-email/**").permitAll()
-                            .anyRequest().authenticated())
 
+                            // cars
+                            .requestMatchers(HttpMethod.POST,"/cars/register").hasRole("ENCARGADO")
+
+                                .anyRequest().authenticated())
                 // Filtro que recibe el mail y password del login y emite JWT al usuario
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 

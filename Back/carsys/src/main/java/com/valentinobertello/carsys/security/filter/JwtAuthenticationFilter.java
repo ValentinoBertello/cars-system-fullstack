@@ -1,7 +1,7 @@
 package com.valentinobertello.carsys.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.valentinobertello.carsys.dtos.LoginRequestDto;
+import com.valentinobertello.carsys.dtos.auth.LoginRequestDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;

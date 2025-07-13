@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidad para marcas de autos (ej: Toyota, Ford).
+ */
 @Entity
 @Table(name = "brands")
 @Data

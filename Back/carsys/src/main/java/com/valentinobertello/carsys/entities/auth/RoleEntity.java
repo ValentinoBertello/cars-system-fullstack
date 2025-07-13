@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Representa un rol de usuario en el sistema (ej: ADMIN, ENCARGADO).
+ * Se mapea a la tabla "roles" en la base de datos.
+ */
 @Entity
 @Table(name = "roles")
 @Data

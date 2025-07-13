@@ -1,4 +1,4 @@
-package com.valentinobertello.carsys.dtos;
+package com.valentinobertello.carsys.dtos.auth;
 
 import com.valentinobertello.carsys.validation.ValidPassword;
 import jakarta.validation.constraints.*;

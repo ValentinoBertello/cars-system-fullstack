@@ -1,5 +1,6 @@
 package com.valentinobertello.carsys.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,18 @@ public class GlobalExceptionHandler {
      * **/
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        String additionalInfo = getStackTraceAsString(ex);
+        String mensaje = ex.getMessage();
+        String errorMessage = "Errors: " + mensaje;
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(), errorMessage, additionalInfo);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    /**
+     * Maneja excepciones cuando se lanza un EntityNotFoundException
+     * **/
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
         String additionalInfo = getStackTraceAsString(ex);
         String mensaje = ex.getMessage();
         String errorMessage = "Errors: " + mensaje;

@@ -1,7 +1,7 @@
 package com.valentinobertello.carsys.security.userDetails;
 
 import com.valentinobertello.carsys.entities.auth.UserEntity;
-import com.valentinobertello.carsys.repository.UserRepository;
+import com.valentinobertello.carsys.repository.auth.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidad para modelos de vehículos (ej: Corolla, F-150).
+ * Pertenece a una BrandEntity (marca) específica.
+ */
 @Entity
 @Table(name = "models")
 @Data

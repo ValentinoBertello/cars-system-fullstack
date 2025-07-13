@@ -1,7 +1,7 @@
 package com.valentinobertello.carsys.service;
 
-import com.valentinobertello.carsys.dtos.UserRequest;
-import com.valentinobertello.carsys.dtos.UserResponse;
+import com.valentinobertello.carsys.dtos.auth.UserRequest;
+import com.valentinobertello.carsys.dtos.auth.UserResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

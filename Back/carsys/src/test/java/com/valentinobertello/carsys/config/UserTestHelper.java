@@ -1,7 +1,7 @@
 package com.valentinobertello.carsys.config;
 
-import com.valentinobertello.carsys.dtos.UserRequest;
-import com.valentinobertello.carsys.dtos.UserResponse;
+import com.valentinobertello.carsys.dtos.auth.UserRequest;
+import com.valentinobertello.carsys.dtos.auth.UserResponse;
 import com.valentinobertello.carsys.entities.auth.RoleEntity;
 import com.valentinobertello.carsys.entities.auth.UserEntity;
 
