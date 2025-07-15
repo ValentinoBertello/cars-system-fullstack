@@ -6,9 +6,12 @@ import com.valentinobertello.carsys.entities.auth.UserEntity;
 import com.valentinobertello.carsys.entities.car.CarEntity;
 import com.valentinobertello.carsys.entities.car.ModelEntity;
 import com.valentinobertello.carsys.enums.CarStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +27,7 @@ public class CarDataMapper {
      *
      * @param postCarDto DTO con los datos ingresados por el cliente (patente, color, etc.)
      */
-    public CarEntity mapUserRequestToUserEntity(PostCarDto postCarDto, ModelEntity modelEntity, UserEntity userEntity) {
+    public CarEntity mapCarRequestToCarEntity(PostCarDto postCarDto, ModelEntity modelEntity, UserEntity userEntity) {
         return CarEntity.builder()
                 .licensePlate(postCarDto.getLicensePlate())
                 .model(modelEntity)
@@ -65,6 +68,30 @@ public class CarDataMapper {
         return carEntities.stream()
                 .map(this::mapCarEntityToCarResponse)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Mapea una "Page" de "carEntity" a una "Page" de DTOs de respuesta.
+     */
+    public Page<CarResponse> mapCarEntitiesPageToCarResponsesPage(Page<CarEntity> carEntitiesPage) {
+        // Obtenemos la lista de entidades del page
+        List<CarEntity> carEntities = carEntitiesPage.getContent();
+
+        // Creamos lista vacía de carResponse
+        List<CarResponse> carResponses = new ArrayList<>();
+
+        // Iteramos sobre cada entity y la convertimos en response
+        for (CarEntity entity : carEntities) {
+            CarResponse response = this.mapCarEntityToCarResponse(entity);
+            carResponses.add(response);
+        }
+
+        // Creamos y retornamos la página con las responses
+        return new PageImpl<>(
+                carResponses,
+                carEntitiesPage.getPageable(),
+                carEntitiesPage.getTotalElements()
+        );
     }
 
 }

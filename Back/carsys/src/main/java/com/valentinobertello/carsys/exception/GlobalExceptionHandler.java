@@ -58,14 +58,33 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Captura cualquier otra excepción no controlada previamente
-     **/
+     * Devuelve cualquier otra excepción no controlada previamente y además
+     * devuelve la causa RAÍZ en el mensaje
+     * **/
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+        // Inicializamos root en la excepción general (capa superior)
+        Throwable root = ex;
+        // Vamos iterando causa por causa hasta llegar a la causa raíz
+        while (root.getCause() != null) {
+            root = root.getCause();
+        }
+
+        // Formamos un mensaje con el tipo de excepción y su mensaje
+        String realMessage = root.getClass().getSimpleName() + ": " + root.getMessage();
+
+        // Seguimos incluyendo el stacktrace completo como additionalInfo
         String additionalInfo = getStackTraceAsString(ex);
-        ErrorResponse error = new ErrorResponse
-                (HttpStatus.INTERNAL_SERVER_ERROR.toString(), "An unexpected error occurred", additionalInfo);
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        // Construimos el response con el mensaje real
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+                realMessage,
+                additionalInfo
+        );
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(error);
     }
 
     private String getStackTraceAsString(Throwable ex) {
