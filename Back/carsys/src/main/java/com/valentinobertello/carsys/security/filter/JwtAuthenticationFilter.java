@@ -87,11 +87,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .add("username", username)
                 .build();
 
+        long twoDaysInMs = 2L * 24 * 60 * 60 * 1000; // 2 días en milisegundos
+
         // Construye el token JWT con:
         String token = Jwts.builder()
                 .subject(username) // Identificador del usuario (email)
                 .claims(claims) // Roles/permisos
-                .expiration(new Date(System.currentTimeMillis() + 432000000)) //es una hora (considerar cambiarlo)
+                .expiration(new Date(System.currentTimeMillis() + twoDaysInMs)) //es una hora (considerar cambiarlo)
                 .issuedAt(new Date()) // Fecha de emisión
                 .signWith(SECRET_KEY) // Firma con la clave secreta
                 .compact();

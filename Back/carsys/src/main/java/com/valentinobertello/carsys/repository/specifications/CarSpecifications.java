@@ -6,12 +6,8 @@ import com.valentinobertello.carsys.entities.car.CarEntity;
 import com.valentinobertello.carsys.entities.car.ModelEntity;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Este mismo filtro podría implementarse con JPQL algo así:
@@ -36,17 +32,12 @@ public class CarSpecifications {
     public static Specification<CarEntity> carSearch(String licensePlate, String brand, String model, String username) {
         return (root, query, cb) -> {
 
-            if (!Long.class.equals(query.getResultType())) {
-                // así Spring sabe que también tiene que hacer JOIN para el ORDER BY
-                root.fetch("model", JoinType.LEFT)
-                        .fetch("brand", JoinType.LEFT);
-
-            }
-
-            query.distinct(true);
-
             //Empezamos con una conjunción vacía, para ir añadiendo condiciones
             Predicate predicate = cb.conjunction();
+
+            //Filtro por status Disponible
+            predicate = cb.and(predicate,
+                        cb.equal(root.get("status"), "DISPONIBLE"));
 
             //Filtro por username (que los autos correspondan al usuario autenticado)
             if (username != null && !username.isEmpty()) {

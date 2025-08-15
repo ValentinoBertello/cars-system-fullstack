@@ -13,14 +13,18 @@ import java.util.List;
 
 @Service
 public interface CarService {
-    CarResponse createCar(PostCarDto carRequest);
+    CarResponse createCar(PostCarDto carRequest, String username);
 
     CarResponse updateCar(UpdateCarDto carRequest, String username);
 
-    Page<CarResponse> searchCarsByFilters(String licensePlate, String brand, String model, String username,
+    Page<CarResponse> getCarsPageByFilters(String licensePlate, String brand, String model, String username,
                                           Pageable pageable);
 
     List<ModelResponse> getAllModels();
 
     List<BrandEntity> getAllBrands();
+
+    Boolean existsLicensePlate(String licensePlate, String name);
+
+    List<CarResponse> getCarsByFilters(String carQuery, String name);
 }

@@ -1,0 +1,93 @@
+<div class="container mt-3">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+            <i class="fas fa-list me-3" style="font-size: 2rem; color: #fff;">
+            </i>
+            <h4 class="mb-0">Listado de Clientes</h4>
+        </div>
+        <div class="card-body">
+
+            <!-- FILTROS -->
+            <div class="row g-3 mb-2">
+                <!-- INPUT CLIENTE -->
+                <div class="col-md-9">
+                    <label for="clientQuery" class="form-label">Cliente<span class="filter-subtext">(DNI, nombre o
+                            apellido)</span></label>
+                    <input (ngModelChange)="onClientQueryChange($event)" [(ngModel)]="clientQueryInput" type="text"
+                        id="clientQuery" class="form-control" placeholder="Buscar...">
+                </div>
+
+                <!-- ORDENAR POR -->
+                <div class="col-md-3">
+                    <label class="form-label">Ordenar por...</label>
+                    <div class="d-flex align-items-center">
+
+                        <select (ngModelChange)="onSortFieldChange($event)" [(ngModel)]="sortField" class="form-select">
+                            <option value="registrationDate">Fecha de registro</option>
+                            <option value="lastName">Apellido</option>
+                            <option value="name">Nombre</option>
+                        </select>
+
+                        <button (click)="toggleSortDirection()" class="btn-sort">
+                            <i class="fas fa-lg"
+                                [ngClass]="sortDirection === 'asc' ? 'fa-arrow-up-short-wide' : 'fa-arrow-down-wide-short'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLA -->
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>DNI</th>
+                                <th>Celular</th>
+                                <th>Fecha registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (c of filteredClients; track $index) {
+                            <tr>
+                                <td>{{ c.lastName }}</td>
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.dni }}</td>
+                                <td>{{ c.phone }}</td>
+                                <td>{{ c.registrationDate | date:'dd/MM/yyyy' }}</td>
+                                <td><button (click)="openInfoModal(c)" type="button" class="btn btn-info">Ver
+                                        ventas</button></td>
+                            </tr>
+                            }
+                            @if (filteredClients.length === 0) {
+                            <td colspan="8" class="text-center text-muted">
+                                No se encontraron clientes.
+                            </td>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINACIÓN -->
+                @if (totalPages > 1) {
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <!-- Boton anterior -->
+                    <button class="btn custom-btn px-4" [disabled]="!hasPrev" (click)="goPrev()">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="d-none d-sm-inline ms-2">Anterior</span>
+                    </button>
+
+                    <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+
+                    <!-- Boton posterior -->
+                    <button class="btn custom-btn px-4" [disabled]="!hasNext" (click)="goNext()">
+                        <span class="d-none d-sm-inline me-2">Siguiente</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                }
+
+            </div>
+        </div>
+    </div>

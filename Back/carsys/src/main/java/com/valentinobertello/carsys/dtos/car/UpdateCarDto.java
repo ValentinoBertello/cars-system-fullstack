@@ -22,9 +22,6 @@ public class UpdateCarDto {
     @NotNull
     private Long id;
 
-    @Size(max = 30)
-    private String color;
-
     @DecimalMin("0.00")
     private BigDecimal basePrice;
 

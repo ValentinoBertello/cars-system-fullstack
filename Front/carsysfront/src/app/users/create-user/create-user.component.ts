@@ -188,7 +188,7 @@ export class CreateUserComponent {
         timerProgressBar: true,
         showConfirmButton: false
       }).then(() => {
-        this.router.navigate(['/landing-page']);
+        this.router.navigate(['/landing']);
       });
     }
   

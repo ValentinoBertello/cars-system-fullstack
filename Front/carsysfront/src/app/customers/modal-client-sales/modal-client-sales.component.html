@@ -1,0 +1,46 @@
+<!-- modal-client-sales.component.html -->
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Ventas a 
+    <span class="client-name">{{ clientModel.name }} {{ clientModel.lastName }}</span></h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="container-fluid">
+
+    <!-- Listado de ventas -->
+    <h5 class="mt-2 mb-3 section-title">Historial de Ventas</h5>
+    
+    <div *ngIf="sales.length === 0" class="alert alert-info">
+      No se encontraron ventas para este cliente
+    </div>
+
+    <div *ngFor="let sale of sales" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <div class="row g-2 align-items-center">
+          <!-- Información de la venta -->
+          <div class="col-md-6">
+            <strong>Fecha: </strong>
+            <span>{{ sale.saleDate | date:'dd/MM/yyyy' }}</span>
+            <span class="sale-time ms-2">{{ sale.saleDate | date:'HH:mm' }}</span>
+          </div>
+          <div class="col-md-6">
+            <strong>Total: </strong>
+            <span class="h5 mb-0">{{ sale.salePrice | price }}</span>
+          </div>
+          
+          <!-- Información del vehículo -->
+          <div class="col-12 mt-2 border-top pt-2"></div>
+          <div class="col-6"><strong>Vehículo:</strong> {{ sale.car.brandName }} {{ sale.car.modelName }}</div>
+          <div class="col-6"><strong>Patente:</strong> {{ sale.car.licensePlate | licensePlate}}</div>
+          <div class="col-6"><strong>Año:</strong> {{ sale.car.year }}</div>
+          <div class="col-6"><strong>Color:</strong> {{ sale.car.color }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+</div>

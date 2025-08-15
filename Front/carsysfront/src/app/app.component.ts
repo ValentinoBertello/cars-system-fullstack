@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/users/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,20 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Vas a cerrar tu sesión actual.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'No, quedarme'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+        this.router.navigate(['/user/login']);
+        Swal.fire('Cerrado', 'Tu sesión ha sido cerrada.', 'success');
+      }
+    });
+  }
   }
 
-}

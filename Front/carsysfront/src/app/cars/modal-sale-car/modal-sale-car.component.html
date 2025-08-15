@@ -1,0 +1,158 @@
+<div class="card shadow-sm">
+  <!-- HEADER -->
+  <div class="card-header bg-dark text-white d-flex align-items-center">
+    <i class="fas fa-dollar-sign me-2" style="font-size: 1.5rem;"></i>
+    <h5 class="mb-0">Vender Auto</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <!-- RESUMEN DEL AUTO -->
+      <div class="col-md-5">
+        <div class="card mb-3 border-success">
+          <div class="card-body">
+            <h6 class="card-title text-success">
+              {{ carModel.brandName }} {{ carModel.modelName }} ({{ carModel.year }})
+            </h6>
+            <p class="mb-1"><strong>Patente:</strong> {{ carModel.licensePlate | licensePlate}}</p>
+            <p class="mb-0">
+              <strong>Precio: </strong>
+              <i class="fas fa-dollar-sign text-success"></i>
+              {{ carModel.basePrice | price }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREACION O SELECCION DE CLIENTE -->
+      <div class="col-md-7">
+
+        <!-- BOTON PARA ELEGIR EL MODO -->
+        <button class="btn btn-sm mb-3" [ngClass]="isNewClient ? 'btn-outline-secondary' : 'btn-outline-primary'"
+          (click)="toggleNewClient()">
+          {{ isNewClient ? 'Volver a existente' : 'Crear cliente nuevo' }}
+        </button>
+
+        @if(!isNewClient) {
+        <!-- SELECCION DE CLIENTE -->
+        <div class="input-group mb-2">
+          <!-- Search input -->
+          <input type="text" class="form-control" placeholder="Buscar cliente por nombre o DNI"
+            [(ngModel)]="searchInput" (keydown.enter)="searchClients()">
+          <button class="btn btn-outline-success" (click)="searchClients()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <!-- LISTA DE CLIENTES -->
+        <ul class="list-group client-list">
+          @for (client of filteredClients; track $index) {
+
+          <li class="list-group-item d-flex justify-content-between align-items-center"
+            [class.active]="client.id === selectedClientId" (click)="selectClient(client)">
+            <div>
+              {{ client.lastName }}, {{ client.name }}
+              <small class="text-muted">({{ client.dni }})</small>
+            </div>
+
+            @if (client.id === selectedClientId) {
+            <i class="fas fa-check text-white"></i>
+            }
+
+          </li>
+          }
+          @if (filteredClients.length === 0 && searchButtonTouched === true) {
+            <li class="list-group-item text-center text-muted">
+            No hay clientes para mostrar.
+          </li>
+          }
+        </ul>
+        } @else {
+          
+        <!-- CLIENTE NUEVO (reactive form) -->
+        <form [formGroup]="newClientForm">
+          <div class="row g-3">
+            <!-- NOMBRE -->
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input formControlName="clientName" class="form-control" />
+
+              <!-- ERRORES -->
+              @if(newClientForm.get('clientName')?.invalid && newClientForm.get('clientName')?.touched) {
+              @if(newClientForm.get('clientName')?.hasError('required')) {
+              <div class="text-danger align-self-end">Nombre requerido</div>
+              }
+              @if(newClientForm.get('clientName')?.hasError('maxlength')) {
+              <div class="text-danger align-self-end">Demasiados caracteres</div>
+              }
+              }
+
+            </div>
+            <!-- APELLIDO -->
+            <div class="col-md-6">
+              <label class="form-label">Apellido</label>
+              <input formControlName="clientLastName" class="form-control" />
+
+              <!-- ERRORES -->
+              @if(newClientForm.get('clientLastName')?.invalid && newClientForm.get('clientLastName')?.touched) {
+              @if(newClientForm.get('clientLastName')?.hasError('required')) {
+              <div class="text-danger align-self-end" style="width: 500px;">Apellido requerido</div>
+              }
+              @if(newClientForm.get('clientLastName')?.hasError('maxlength')) {
+              <div class="text-danger align-self-end" style="width: 500px;">Demasiados caracteres</div>
+              }
+              }
+
+            </div>
+            <!-- TELEFONO -->
+            <div class="col-md-6">
+              <label class="form-label">Teléfono</label>
+              <input formControlName="clientPhone" class="form-control" />
+
+              <!-- ERRORES -->
+              @if(newClientForm.get('clientPhone')?.invalid && newClientForm.get('clientPhone')?.touched) {
+              @if(newClientForm.get('clientPhone')?.hasError('required')) {
+              <div class="text-danger align-self-end">Celular requerido</div>
+              }
+              @if(newClientForm.get('clientPhone')?.hasError('repeatedPhoneError')) {
+              <div class="text-danger align-self-end">Ya existe un cliente con ese número</div>
+              }
+              }
+
+            </div>
+            <!-- DNI -->
+            <div class="col-md-6">
+              <label class="form-label">DNI</label>
+              <input formControlName="clientDni" class="form-control" />
+
+              <!-- ERRORES -->
+              @if(newClientForm.get('clientDni')?.invalid && newClientForm.get('clientDni')?.touched) {
+              @if(newClientForm.get('clientDni')?.hasError('required')) {
+              <div class="text-danger align-self-end">Dni requerido</div>
+              }
+              @if(newClientForm.get('clientDni')?.hasError('pattern')) {
+              <div class="text-danger align-self-end">Dni inválido</div>
+              }
+              @if(newClientForm.get('clientDni')?.hasError('repeatedDniError')) {
+              <div class="text-danger align-self-end">Ya existe un cliente con ese dni</div>
+              }
+              }
+
+            </div>
+          </div>
+        </form>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-outline-secondary me-2" [disabled]="isLoading" (click)="cancel()">
+      Cancelar
+    </button>
+    <button class="btn btn-success" (click)="confirmSale()">
+      Confirmar Venta
+    </button>
+  </div>
+</div>

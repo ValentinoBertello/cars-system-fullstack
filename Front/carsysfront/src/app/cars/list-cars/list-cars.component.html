@@ -1,0 +1,167 @@
+<div class="container mt-3">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+            <i class="fas fa-list me-3" style="font-size: 2rem; color: #fff;">
+            </i>
+            <h4 class="mb-0">Listado de Autos</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-3 mb-2">
+                <!-- FILTROS -->
+                <!-- SELECT MARCA -->
+                <div class="col-md-3">
+                    <label for="brand" class="form-label">Marca</label>
+                    <select (ngModelChange)="onBrandChange($event)" [(ngModel)]="selectedBrand"
+                        (change)="changeModels($event)" id="brand" class="form-select">
+                        <option value="" selected>Elige una Marca</option>
+                        @for (m of selectBrands; track $index) {
+                        <option [value]="m.name">{{m.name}}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- SELECT MARCA -->
+                <div class="col-md-3">
+                    <label for="model" class="form-label">Modelo</label>
+                    <select (ngModelChange)="onModelChange($event)" [(ngModel)]="selectedModel" id="model"
+                        class="form-select">
+                        <option value="" selected>Elige un Modelo</option>
+                        @for (m of selectModels; track $index) {
+                        <option [value]="m.name">{{m.name}}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- INPUT PATENTE -->
+                <div class="col-md-3">
+                    <label for="patente" class="form-label">Patente</label>
+                    <input (ngModelChange)="onLicensePlateChange($event)" [(ngModel)]="licensePlateInput" type="text"
+                        id="patente" class="form-control" placeholder="Ej. ABC123 o AA123AA">
+                </div>
+
+                <!-- ORDENAR POR -->
+                <div class="col-md-3">
+                    <label class="form-label">Ordenar por...</label>
+                    <div class="d-flex align-items-center">
+
+                        <select (ngModelChange)="onSortFieldChange($event)" [(ngModel)]="sortField" class="form-select">
+                            <option value="registrationDate">Fecha de llegada</option>
+                            <option value="basePrice">Precio</option>
+                            <option value="mileage">Kilometraje</option>
+                            <option value="year">Año de fabricación</option>
+                        </select>
+
+                        <button (click)="toggleSortDirection()" class="btn-sort">
+                            <i class="fas fa-lg"
+                                [ngClass]="sortDirection === 'asc' ? 'fa-arrow-up-short-wide' : 'fa-arrow-down-wide-short'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLA -->
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Patente</th>
+                                <th class="base-price-td">Precio</th>
+                                <th class="km-td">Kilometraje</th>
+                                <th class="">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (auto of filteredCars; track $index) {
+                            <tr>
+                                <td>{{ auto.brandName }}</td>
+                                <td>{{ auto.modelName }} - {{auto.year}}</td>
+                                <td>{{ auto.licensePlate | licensePlate}}</td>
+                                <td class="base-price-td">
+                                    @if (editingCarId !== auto.id) {
+                                    <!-- Dato normal -->
+                                    {{ auto.basePrice | price }}
+                                    } @else {
+                                    <!-- Input para editar si se selecciona el auto -->
+                                    <input currencyMask
+                                        [options]="{prefix: '$', thousands: '.', precision: 0, align: 'right'}"
+                                        type="text" class="form-control small-input" [(ngModel)]="editingBasePrice"
+                                        [disabled]="isLoading" />
+                                    }
+                                </td>
+                                <td class="km-td">
+                                    @if (editingCarId !== auto.id) {
+                                    <!-- Dato normal -->
+                                    {{ auto.mileage | kilometers }} <span class="text-muted">km</span>
+                                    } @else {
+                                    <!-- Input para editar si se selecciona el auto -->
+                                    <input currencyMask
+                                        [options]="{prefix: '', thousands: '.', precision: 0, align: 'right'}"
+                                        type="text" class="form-control small-input" [(ngModel)]="editingMileage"
+                                        [disabled]="isLoading" />
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (editingCarId !== auto.id) {
+                                    <!-- dropdown de items normal -->
+                                    <div class="dropend">
+                                        <button class="btn btn-outline-dark dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a (click)="startEditing(auto)" style="cursor: pointer;"
+                                                    class="dropdown-item">Editar</a></li>
+                                            <li><a style="cursor: pointer;" class="dropdown-item"
+                                                    (click)="openInfoModal(auto)">Info</a></li>
+                                            <li><a style="cursor: pointer;" class="dropdown-item text-success"
+                                                    (click)="openSaleModal(auto)"><i
+                                                        class="fas fa-dollar-sign me-2"></i>Vender</a></li>
+                                        </ul>
+                                    </div>
+                                    } @else {
+                                    <!-- botones para aplicar o no la edición realizada -->
+                                    <button class="btn btn-sm btn-success me-2" [disabled]="isLoading"
+                                        (click)="applyEditing(auto)">
+                                        ✓
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" [disabled]="isLoading"
+                                        (click)="cancelEditing()">
+                                        ✕
+                                    </button>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                            @if (filteredCars.length === 0) {
+                            <td colspan="8" class="text-center text-muted">
+                                No se encontraron autos.
+                            </td>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PAGINACIÓN -->
+            @if (totalPages > 1) {
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <!-- Boton anterior -->
+                <button class="btn custom-btn px-4" [disabled]="!hasPrev" (click)="goPrev()">
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="d-none d-sm-inline ms-2">Anterior</span>
+                </button>
+
+                <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+
+                <!-- Boton posterior -->
+                <button class="btn custom-btn px-4" [disabled]="!hasNext" (click)="goNext()">
+                    <span class="d-none d-sm-inline me-2">Siguiente</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            }
+        </div>
+    </div>
+</div>

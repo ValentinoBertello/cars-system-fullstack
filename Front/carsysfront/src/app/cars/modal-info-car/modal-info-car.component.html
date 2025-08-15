@@ -1,0 +1,42 @@
+<!-- vehicle-info.component.html -->
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+        Información del Vehículo
+    </h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <div class="row g-2">
+        <div class="col-6"><strong>Marca:</strong> {{ carModel.brandName }}</div>
+        <div class="col-6"><strong>Modelo:</strong> {{ carModel.modelName }}</div>
+
+        <div class="col-6"><strong>Año:</strong> {{ carModel.year }}</div>
+        <div class="col-6"><strong>Color:</strong> {{ carModel.color }}</div>
+
+        <div class="col-6">
+            <strong>Patente:</strong> {{ carModel.licensePlate | licensePlate }}
+        </div>
+        <div class="col-6">
+            <strong>Fecha de llegada:</strong>
+            {{ carModel.registrationDate | date:'dd/MM/yyyy' 
+            }}
+        </div>
+
+        <div class="col-6">
+            <strong>Precio base:</strong>
+            {{ carModel.basePrice | price }}
+        </div>
+        <div class="col-6">
+            <strong>Kilometraje:</strong>
+            {{ carModel.mileage | kilometers }} km
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">
+        Cerrar
+    </button>
+</div>

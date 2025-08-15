@@ -121,33 +121,33 @@ INSERT INTO models (name, brand_id) SELECT 'Renegade',       id FROM brands WHER
 -- Insert de autos:
 -- === AUTOS FORD ===
 INSERT INTO cars (license_plate, model_id, user_id, year, color, base_price, mileage, status, registration_date) VALUES
-('TRF 789',   (SELECT id FROM models WHERE name = 'Fiesta'),   777, 2014, 'Rojo',    14500000.00, 110000.0, 'DISPONIBLE', '2025-06-01'),
-('FRL 321',   (SELECT id FROM models WHERE name = 'Fiesta'),   777, 2015, 'Gris',    15800000.00,  95000.0, 'DISPONIBLE', '2025-07-03'),
-('AA 123 BB', (SELECT id FROM models WHERE name = 'Focus'),    777, 2017, 'Negro',   19000000.00,  65000.0, 'DISPONIBLE', '2025-05-21'),
-('AG 456 CR', (SELECT id FROM models WHERE name = 'Focus'),    777, 2016, 'Azul',    17200000.00,  87000.0, 'DISPONIBLE', '2025-06-18'),
-('BR 432 MA', (SELECT id FROM models WHERE name = 'Ka'),       777, 2020, 'Blanco',  13000000.00,  40000.0, 'DISPONIBLE', '2025-07-10'),
-('CD 654 ZT', (SELECT id FROM models WHERE name = 'Ka'),       777, 2015, 'Rojo',    12000000.00, 125000.0, 'DISPONIBLE', '2025-06-06'),
-('ZRM 982',   (SELECT id FROM models WHERE name = 'Ranger'),   777, 2018, 'Gris',    30000000.00,  60000.0, 'DISPONIBLE', '2025-05-28'),
-('HJK 265',   (SELECT id FROM models WHERE name = 'Ranger'),   777, 2021, 'Negro',   34000000.00,  35000.0, 'DISPONIBLE', '2025-07-12');
+('NMF789',   (SELECT id FROM models WHERE name = 'Fiesta'),   777, 2014, 'Rojo',    14500000.00, 110000.0, 'DISPONIBLE', '2025-06-01'),
+('ONL321',   (SELECT id FROM models WHERE name = 'Fiesta'),   777, 2015, 'Gris',    15800000.00,  95000.0, 'DISPONIBLE', '2025-07-03'),
+('AA901CD', (SELECT id FROM models WHERE name = 'Focus'),    777, 2017, 'Negro',   19000000.00,  65000.0, 'DISPONIBLE', '2025-05-21'),
+('AA456FG', (SELECT id FROM models WHERE name = 'Focus'),    777, 2016, 'Azul',    17200000.00,  87000.0, 'DISPONIBLE', '2025-06-18'),
+('AE432KL', (SELECT id FROM models WHERE name = 'Ka'),       777, 2020, 'Blanco',  13000000.00,  40000.0, 'DISPONIBLE', '2025-07-10'),
+('ONK888', (SELECT id FROM models WHERE name = 'Ka'),       777, 2015, 'Rojo',    12000000.00, 125000.0, 'DISPONIBLE', '2025-06-06'),
+('AC982MN',   (SELECT id FROM models WHERE name = 'Ranger'),   777, 2018, 'Gris',    30000000.00,  60000.0, 'DISPONIBLE', '2025-05-28'),
+('AE265PQ',   (SELECT id FROM models WHERE name = 'Ranger'),   777, 2021, 'Negro',   34000000.00,  35000.0, 'DISPONIBLE', '2025-07-12');
 
 -- === AUTOS CHEVROLET ===
 INSERT INTO cars (license_plate, model_id, user_id, year, color, base_price, mileage, status, registration_date) VALUES
-('LB 912 FR', (SELECT id FROM models WHERE name = 'Camaro'),     777, 2019, 'Negro',   32500000.00,  46000.0, 'DISPONIBLE', '2025-07-08'),
-('CG 777 PX', (SELECT id FROM models WHERE name = 'Camaro'),     777, 2014, 'Rojo',    34000000.00,  35000.0, 'DISPONIBLE', '2025-06-14'),
-('TRG 158',   (SELECT id FROM models WHERE name = 'Silverado'),  777, 2020, 'Blanco',  41000000.00,  30000.0, 'DISPONIBLE', '2025-05-19'),
-('DXC 447',   (SELECT id FROM models WHERE name = 'Silverado'),  777, 2018, 'Azul',    38000000.00,  50000.0, 'DISPONIBLE', '2025-06-24'),
-('KP 871 FD', (SELECT id FROM models WHERE name = 'Onix'),       777, 2015, 'Gris',    13500000.00, 100000.0, 'DISPONIBLE', '2025-06-01'),
-('MX 105 LH', (SELECT id FROM models WHERE name = 'Onix'),       777, 2017, 'Rojo',    14200000.00,  89000.0, 'DISPONIBLE', '2025-07-02'),
-('WFD 223',   (SELECT id FROM models WHERE name = 'Cruze'),      777, 2021, 'Negro',   22000000.00,  30000.0, 'DISPONIBLE', '2025-07-11'),
-('NBK 301',   (SELECT id FROM models WHERE name = 'Cruze'),      777, 2016, 'Blanco',  18500000.00,  92000.0, 'DISPONIBLE', '2025-05-29');
+('AD912RS', (SELECT id FROM models WHERE name = 'Camaro'),     777, 2019, 'Negro',   32500000.00,  46000.0, 'DISPONIBLE', '2025-07-08'),
+('NMF789', (SELECT id FROM models WHERE name = 'Camaro'),     777, 2014, 'Rojo',    34000000.00,  35000.0, 'DISPONIBLE', '2025-06-14'),
+('AE158TU',   (SELECT id FROM models WHERE name = 'Silverado'),  777, 2020, 'Blanco',  41000000.00,  30000.0, 'DISPONIBLE', '2025-05-19'),
+('AC447VW',   (SELECT id FROM models WHERE name = 'Silverado'),  777, 2018, 'Azul',    38000000.00,  50000.0, 'DISPONIBLE', '2025-06-24'),
+('ONA882', (SELECT id FROM models WHERE name = 'Onix'),       777, 2015, 'Gris',    13500000.00, 100000.0, 'DISPONIBLE', '2025-06-01'),
+('AA105FD', (SELECT id FROM models WHERE name = 'Onix'),       777, 2017, 'Rojo',    14200000.00,  89000.0, 'DISPONIBLE', '2025-07-02'),
+('AE223XY',   (SELECT id FROM models WHERE name = 'Cruze'),      777, 2021, 'Negro',   22000000.00,  30000.0, 'DISPONIBLE', '2025-07-11'),
+('AA301ZA',   (SELECT id FROM models WHERE name = 'Cruze'),      777, 2016, 'Blanco',  18500000.00,  92000.0, 'DISPONIBLE', '2025-05-29');
 
 -- === AUTOS JEEP ===
 INSERT INTO cars (license_plate, model_id, user_id, year, color, base_price, mileage, status, registration_date) VALUES
-('PL 303 MG', (SELECT id FROM models WHERE name = 'Wrangler'),       777, 2016, 'Verde',   28500000.00,  93000.0, 'DISPONIBLE', '2025-05-17'),
-('FD 612 QW', (SELECT id FROM models WHERE name = 'Wrangler'),       777, 2018, 'Negro',   31000000.00,  70000.0, 'DISPONIBLE', '2025-06-27'),
-('HZL 042',   (SELECT id FROM models WHERE name = 'Grand Cherokee'), 777, 2019, 'Gris',    36000000.00,  60000.0, 'DISPONIBLE', '2025-07-05'),
-('KTR 919',   (SELECT id FROM models WHERE name = 'Grand Cherokee'), 777, 2021, 'Blanco',  39000000.00,  32000.0, 'DISPONIBLE', '2025-06-09'),
-('ZQ 590 RE', (SELECT id FROM models WHERE name = 'Compass'),        777, 2017, 'Azul',    27000000.00,  75000.0, 'DISPONIBLE', '2025-07-01'),
-('TR 208 XB', (SELECT id FROM models WHERE name = 'Compass'),        777, 2015, 'Rojo',    25000000.00, 110000.0, 'DISPONIBLE', '2025-06-11'),
-('YKF 857',   (SELECT id FROM models WHERE name = 'Renegade'),       777, 2018, 'Gris',    26000000.00,  81000.0, 'DISPONIBLE', '2025-07-13'),
-('NMD 119',   (SELECT id FROM models WHERE name = 'Renegade'),       777, 2020, 'Negro',   29000000.00,  45000.0, 'DISPONIBLE', '2025-05-25');
+('AA303DE', (SELECT id FROM models WHERE name = 'Wrangler'),       777, 2016, 'Verde',   28500000.00,  93000.0, 'DISPONIBLE', '2025-05-17'),
+('AC612HI', (SELECT id FROM models WHERE name = 'Wrangler'),       777, 2018, 'Negro',   31000000.00,  70000.0, 'DISPONIBLE', '2025-06-27'),
+('AD042JK',   (SELECT id FROM models WHERE name = 'Grand Cherokee'), 777, 2019, 'Gris',    36000000.00,  60000.0, 'DISPONIBLE', '2025-07-05'),
+('AE919LM',   (SELECT id FROM models WHERE name = 'Grand Cherokee'), 777, 2021, 'Blanco',  39000000.00,  32000.0, 'DISPONIBLE', '2025-06-09'),
+('AA590NO', (SELECT id FROM models WHERE name = 'Compass'),        777, 2017, 'Azul',    27000000.00,  75000.0, 'DISPONIBLE', '2025-07-01'),
+('ONX432', (SELECT id FROM models WHERE name = 'Compass'),        777, 2015, 'Rojo',    25000000.00, 110000.0, 'DISPONIBLE', '2025-06-11'),
+('AC857AA',   (SELECT id FROM models WHERE name = 'Renegade'),       777, 2018, 'Gris',    26000000.00,  81000.0, 'DISPONIBLE', '2025-07-13'),
+('AE119AH',   (SELECT id FROM models WHERE name = 'Renegade'),       777, 2020, 'Negro',   29000000.00,  45000.0, 'DISPONIBLE', '2025-05-25');

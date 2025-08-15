@@ -1,0 +1,44 @@
+/* Mantener la estética limpia y consistente con tu modal de auto */
+.section-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+
+  text-decoration: underline;
+  text-decoration-color: #04dbf7a6;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.card {
+  border-radius: 0.6rem;
+  border: 0;
+}
+
+.card .card-body {
+  padding: 0.8rem 1rem;
+}
+
+.modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Badges y pequeños ajustes */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.45em 0.6em;
+}
+
+/* Sombra ligera para separar las secciones */
+.shadow-sm {
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.sale-time {
+  font-size: 0.82rem;
+  color: #343a40;
+  vertical-align: middle;
+  opacity: 0.95;
+}

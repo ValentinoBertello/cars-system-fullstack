@@ -33,8 +33,8 @@ public class CarController {
      * Crea un nuevo coche en el sistema.
      */
     @PostMapping("/register")
-    public ResponseEntity<CarResponse> createCar(@RequestBody @Valid PostCarDto carRequest){
-        return ResponseEntity.ok(this.carService.createCar(carRequest));
+    public ResponseEntity<CarResponse> createCar(@RequestBody @Valid PostCarDto carRequest, Authentication authentication){
+        return ResponseEntity.ok(this.carService.createCar(carRequest, authentication.getName()));
     }
 
     /**
@@ -47,13 +47,14 @@ public class CarController {
     }
 
     /**
-     * GET /cars/search
+     * GET /cars/search/page
      * Busca coches según filtros opcionales: patente, marca y modelo.
+     * Ademas se puede especificar el orden ("asc" o "desc" y el atributo)
      * Solo devuelve los coches del usuario autenticado.
      * @return página de CarResponse con los resultados.
      */
-    @GetMapping("/search")
-    public ResponseEntity<?> searchCarsByFilters(
+    @GetMapping("/search/page")
+    public ResponseEntity<?> getCarsPageByFilters(
             Authentication authentication,
             @RequestParam(required = false) String licensePlate,
             @RequestParam(required = false) String brand,
@@ -61,13 +62,24 @@ public class CarController {
             Pageable pageable
 
     ){
-
-            Page<CarResponse> results = carService.searchCarsByFilters(
+            Page<CarResponse> results = carService.getCarsPageByFilters(
                     licensePlate, brand, model,
                     authentication.getName(), pageable
             );
             return ResponseEntity.ok(results);
+    }
 
+    /**
+     * GET /cars/search
+     * Busca coches del usuario autenticado según un término de búsqueda.
+     * El parámetro `carQuery` se compara contra campos relevantes como por ejemplo:
+     * patente, marca o modelo.
+     * Devuelve una lista completa (no paginada) de CarResponse que cumplan la condición.
+     */
+    @GetMapping("/search")
+    public ResponseEntity<?> getCarsByFilters(Authentication authentication, @RequestParam String carQuery){
+        List<CarResponse> results = carService.getCarsByFilters(carQuery, authentication.getName());
+        return ResponseEntity.ok(results);
     }
 
     /**
@@ -86,5 +98,14 @@ public class CarController {
     @GetMapping("/brands")
     public ResponseEntity<List<BrandEntity>> getAllBrands(){
         return ResponseEntity.ok(this.carService.getAllBrands());
+    }
+
+    /**
+     * GET /exists/license-plate
+     * Devuelve true si la patente ya existe y false si no existe
+     */
+    @GetMapping("/exists/license-plate/{licensePlate}")
+    public ResponseEntity<Boolean> existsLicensePlate(@PathVariable String licensePlate, Authentication authentication){
+        return ResponseEntity.ok(this.carService.existsLicensePlate(licensePlate, authentication.getName()));
     }
 }

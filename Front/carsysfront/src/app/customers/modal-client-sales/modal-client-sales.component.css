@@ -1,0 +1,48 @@
+/* modal-client-sales.component.css */
+.section-title {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.card {
+  border-radius: 0.6rem;
+  border: 1px solid #6deeffa6;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card .card-body {
+  padding: 0.8rem 1rem;
+}
+
+.modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.sale-time {
+  font-size: 0.82rem;
+  color: #343a40;
+  vertical-align: middle;
+  opacity: 0.95;
+}
+
+.alert {
+  border-radius: 0.6rem;
+}
+
+.client-name {
+  text-decoration: underline;
+  text-decoration-color: #04dbf7a6;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}

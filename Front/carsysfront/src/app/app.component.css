@@ -9,11 +9,6 @@
   background-color: #000000 !important;
 }
 
-/* Cada item del nav como "registrarse", "iniciar sesión", etc */
-.nav-item {
-
-}
-
 /* El hover de cada item del nav como "registrarse", "iniciar sesión", etc */
 .nav-item:hover {
 border-bottom: 0.7px solid #04dbf7a6;
@@ -22,4 +17,17 @@ border-bottom: 0.7px solid #04dbf7a6;
 
 .navbar-brand:hover {
   transform: scale(1.011);
+}
+
+/* Cuando hacemos click a un elemento de algun desplegable */
+.dropdown-menu .dropdown-item:active,
+.dropdown-menu .dropdown-item.active {
+  background-color: #000000 !important;
+  color: #fff !important;
+}
+
+/* Cuando hacemos click a un elemento de algun desplegable */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item.hover {
+  background-color: #dbdbdb;
 }

@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entidad que representa una venta en el sistema.
+ */
 @Entity
 @Table(name = "sales")
 @Data

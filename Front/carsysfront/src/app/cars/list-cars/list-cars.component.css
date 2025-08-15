@@ -1,0 +1,139 @@
+/* Container y card idénticos al formulario */
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Inputs y selects */
+.form-control,
+.form-select {
+  border: 1px solid #b6b6b6;
+  border-radius: 10px !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border: 0.1px solid #2b2b2ba9;
+  box-shadow: 0 0 0 0.5px #2b2b2ba9;
+}
+
+/* Botón personalizado */
+.custom-btn {
+  background-color: #000000e3 !important;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 0.45rem 0.45rem;
+  font-weight: 500;
+  text-transform: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.custom-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tabla */
+.table-responsive {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  /* overflow: hidden; */
+}
+
+.custom-table {
+  margin-bottom: 0;
+}
+
+.custom-table thead th {
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-table td,
+.custom-table th {
+  vertical-align: middle;
+  padding: 0.75rem 1rem;
+}
+
+.table-light {
+  background-color: #f1f1f1;
+}
+
+/* Botones de acción */
+.btn-outline-primary {
+  border-radius: 8px;
+}
+
+.btn-outline-danger {
+  border-radius: 8px;
+}
+
+.btn-outline-info {
+  border-radius: 8px;
+}
+
+.bg-dark {
+  background-color: #000000 !important;
+}
+
+/* Cuando hacemos click a un elemento de algun desplegable */
+.dropdown-menu .dropdown-item:active,
+.dropdown-menu .dropdown-item.active {
+  background-color: #000000 !important;
+  color: #fff !important;
+}
+
+/* Cuando hacemos click a un elemento de algun desplegable */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item.hover {
+  background-color: #dbdbdb;
+}
+
+
+.btn-sort {
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 18.2px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-responsive {
+  overflow: visible !important;
+}
+
+.base-price-td {
+  text-align: right;
+  padding-right: 0px !important;
+}
+
+.km-td {
+  text-align: right;
+  padding-right: 90px !important;
+}
+
+/* Scroll horizontal en móviles */
+@media (max-width: 767px) {
+  .table-responsive {
+    overflow: auto !important;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Detalle de la Venta</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+  <div class="container-fluid">
+    <!-- Sección Cliente -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title section-title">Cliente</h5>
+        <div class="row g-2">
+          <div class="col-6"><strong>Nombre:</strong> {{ clientFullName }}</div>
+          <div class="col-6"><strong>DNI:</strong> {{ saleModel.client.dni }}</div>
+          <div class="col-6"><strong>Teléfono:</strong> {{ saleModel.client.phone }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Venta -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title section-title">Venta</h5>
+        <div class="row g-2 align-items-center">
+          <div class="col-md-6">
+            <strong>Fecha de venta: </strong>
+            <span>{{ saleModel.saleDate | date:'dd/MM/yyyy' }}</span>
+            <span class="sale-time ms-2">{{ saleModel.saleDate | date:'HH:mm' }}</span>
+          </div>
+          <div class="col-md-6">
+            <strong>Precio de venta: </strong>
+            <span class="h5 mb-0">{{ saleModel.salePrice | price }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Vehículo -->
+    <div class="card mb-0 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title section-title">Vehículo</h5>
+        <div class="row g-2">
+          <div class="col-6"><strong>Marca:</strong> {{ saleModel.car.brandName }}</div>
+          <div class="col-6"><strong>Modelo:</strong> {{ saleModel.car.modelName }}</div>
+
+          <div class="col-6"><strong>Año:</strong> {{ saleModel.car.year }}</div>
+          <div class="col-6"><strong>Color:</strong> {{ saleModel.car.color }}</div>
+
+          <div class="col-6"><strong>Patente:</strong> {{ saleModel.car.licensePlate | licensePlate}}</div>
+          <div class="col-6"><strong>Kilometraje:</strong> {{ saleModel.car.mileage | kilometers }} km</div>
+
+          <div class="col-6">
+            <strong>Precio base:</strong>
+            {{ saleModel.car.basePrice | price }}
+          </div>
+          <div class="col-6">
+            <strong>Fecha de registro: </strong>
+            <span> {{ saleModel.car.registrationDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel')">Cerrar</button>
+</div>

@@ -1,0 +1,115 @@
+<div class="container mt-3">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+            <i class="fas fa-list me-3" style="font-size: 2rem; color: #fff;">
+            </i>
+            <h4 class="mb-0">Listado de Ventas</h4>
+        </div>
+        <div class="card-body">
+
+            <!-- FILTROS -->
+            <div class="row g-3 mb-2">
+                <!-- INPUT FECHA "DESDE" -->
+                <div class="col-md-2">
+                    <label for="desde" class="form-label">Desde</label>
+                    <input [(ngModel)]="sinceDateInput" (ngModelChange)="onSinceDateChange($event)" id="desde"
+                        type="date" class="form-control">
+                </div>
+
+                <!-- INPUT FECHA "HASTA" -->
+                <div class="col-md-2">
+                    <label for="hasta" class="form-label">Hasta</label>
+                    <input id="hasta" [(ngModel)]="untilDateInput" (ngModelChange)="onUntilDateChange($event)"
+                        type="date" class="form-control">
+                </div>
+
+                <!-- INPUT CLIENTE -->
+                <div class="col-md-3">
+                    <label for="clientQuery" class="form-label">Cliente <span class="filter-subtext">(DNI o nombre)</span></label>
+                    <input (ngModelChange)="onClientQueryChange($event)" [(ngModel)]="clientQueryInput" type="text" id="clientQuery"
+                        class="form-control" placeholder="Buscar...">
+                </div>
+
+                <!-- INPUT AUTO -->
+                <div class="col-md-3">
+                    <label for="patente" class="form-label">Auto <span class="filter-subtext">(marca, modelo o patente)</span></label>
+                    <input (ngModelChange)="onCarQueryChange($event)" [(ngModel)]="carQueryInput" type="text"
+                        id="patente" class="form-control" placeholder="Buscar...">
+                </div>
+
+                <!-- ORDENAR POR -->
+                <div class="col-md-2">
+                    <label class="form-label">Ordenar por...</label>
+                    <div class="d-flex align-items-center">
+
+                        <select (ngModelChange)="onSortFieldChange($event)" [(ngModel)]="sortField" class="form-select">
+                            <option value="saleDate">Fecha</option>
+                            <option value="salePrice">Precio</option>
+                        </select>
+
+                        <button (click)="toggleSortDirection()" class="btn-sort">
+                            <i class="fas fa-lg"
+                                [ngClass]="sortDirection === 'asc' ? 'fa-arrow-up-short-wide' : 'fa-arrow-down-wide-short'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLA -->
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Fecha</th>
+                                <th class="base-price-td">Precio</th>
+                                <th>Cliente</th>
+                                <th>Auto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (sale of filteredSales; track $index) {
+                            <tr>
+                                <td>{{ sale.saleDate | date:'dd/MM/yyyy' }}</td>
+                                <td class="base-price-td">{{ sale.salePrice | price }}</td>
+                                <td>
+                                    {{ sale.client.name }} {{ sale.client.lastName }}
+                                    <small class="dni-badge ms-2">{{ sale.client.dni }}</small>
+                                </td>
+                                <td>
+                                    {{ sale.car.brandName }} {{ sale.car.modelName }} {{ sale.car.year }}
+                                    <small class="license-plate ms-2">{{ sale.car.licensePlate | licensePlate}}</small>
+                                </td>
+                                <td><button (click)="openInfoModal(sale)" type="button" class="btn btn-info">Info</button></td>
+                            </tr>
+                            }
+                            @if (filteredSales.length === 0) {
+                            <td colspan="8" class="text-center text-muted">
+                                No se encontraron ventas.
+                            </td>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINACIÓN -->
+                @if (totalPages > 1) {
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <!-- Boton anterior -->
+                    <button class="btn custom-btn px-4" [disabled]="!hasPrev" (click)="goPrev()">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="d-none d-sm-inline ms-2">Anterior</span>
+                    </button>
+
+                    <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+
+                    <!-- Boton posterior -->
+                    <button class="btn custom-btn px-4" [disabled]="!hasNext" (click)="goNext()">
+                        <span class="d-none d-sm-inline me-2">Siguiente</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                }
+
+            </div>
+        </div>
+    </div>

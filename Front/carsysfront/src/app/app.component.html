@@ -1,10 +1,10 @@
- <!-- Navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-0">
 
   <!-- Contenedor fluido sin margenes -->
   <div class="container-fluid g-0">
-     <!-- Logo de la pagina incluyendo foto y título -->
-    <a class="navbar-brand p-0 me-0 d-flex align-items-center" routerLink="/landing-page">
+    <!-- Logo de la pagina incluyendo foto y título -->
+    <a class="navbar-brand p-0 me-0 d-flex align-items-center" routerLink="/landing">
       <img class="img-logo" src="ChatGPT Image 10 jul 2025, 19_45_00 (1).png" alt="Logo Merendero">
       <span class="carsys-span">CarSys</span>
     </a>
@@ -18,23 +18,79 @@
 
         @if (!authService.isAuthenticated()) {
 
-          <!-- Elemento de menú: Registrarse -->
+        <!-- Elemento de menú: Registrarse -->
         <li class="nav-item mx-2">
-          <a class="nav-link" routerLink="/create-user">
+          <a class="nav-link" routerLink="/user/create">
             <i class="fas fa-user-plus me-1"></i> Registrarse
           </a>
         </li>
 
         <!-- Elemento de menú: Iniciar Sesión -->
         <li class="nav-item mx-2">
-          <a class="nav-link" routerLink="/login">
+          <a class="nav-link" routerLink="/user/login">
             <i class="fas fa-sign-in-alt me-1"></i> Iniciar Sesión
           </a>
         </li>
 
         } @else {
-          <!-- email -->
-          <li class="nav-item mx-2">
+
+          <!-- Clientes -->
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle" href="#" id="clientesDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-user-tie"></i> Clientes
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="clientesDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/client/list">
+                <i class="fas fa-list me-1"></i> Lista
+              </a>
+            </li>
+          </ul>
+        </li>
+
+          <!-- Ventas -->
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle" href="#" id="ventasDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-money-bill-wave me-1"></i> Ventas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ventasDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/sale/create">
+                <i class="fas fa-plus me-1"></i> Crear
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/sale/list">
+                <i class="fas fa-list me-1"></i> Lista
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Autos -->
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle" href="#" id="autosDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fas fa-car me-1"></i> Autos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="autosDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/car/create">
+                <i class="fas fa-plus me-1"></i> Crear
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/car/list">
+                <i class="fas fa-list me-1"></i> Lista
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- email -->
+        <li class="nav-item mx-2">
           <a class="nav-link">
             {{authService.getCurrentUserEmail()}}
           </a>
@@ -47,7 +103,7 @@
         </li>
 
         }
-        
+
 
       </ul>
     </div>

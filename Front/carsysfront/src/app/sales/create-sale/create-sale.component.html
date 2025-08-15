@@ -1,0 +1,225 @@
+<div class="container mt-3">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+            <i class="fas fa-money-bill-wave me-3" style="font-size: 2rem; color: #fff;">
+            </i>
+            <h4 class="mb-0">Registrar nueva venta</h4>
+        </div>
+        <div class="card-body">
+
+            <div>
+                <div class="p-4 border rounded">
+
+                    <!-- SECCION DE SELECCION DE AUTO -->
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="selection-card p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <h5 class="section-title mb-0">Seleccionar auto</h5>
+                                        <small class="text-muted">Buscar por marca, modelo o patente</small>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary" (click)="goToCreateCar()">
+                                        Crear auto nuevo
+                                    </button>
+                                </div>
+
+                                <!-- INPUT DE BUSQUEDA -->
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" [(ngModel)]="carSearchInput"
+                                        (keydown.enter)="searchCars()">
+                                    <button class="btn btn-outline-dark" (click)="searchCars()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+
+                                <!-- LISTA DE AUTOS -->
+                                <ul class="list-group client-list">
+                                    @for (car of filteredCars; track $index) {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        [class.active]="car.id === selectedCar.id" (click)="selectCar(car)">
+                                        <div class="d-flex flex-column">
+                                            <div class="fw-semibold">
+                                                {{ car.brandName }} {{ car.modelName }} <small class="text-muted">({{
+                                                    car.year }})</small>
+                                            </div>
+                                            <div class="text-muted small license-plate">({{ car.licensePlate | licensePlate}})</div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center gap-3">
+                                            <!-- Precio alineado a la derecha -->
+                                            <div class="car-price fw-semibold">
+                                                {{ (car.basePrice) | price }}
+                                            </div>
+
+                                            <!-- Icono de selección -->
+                                            <i *ngIf="car.id === selectedCar.id" class="fas fa-check check-icon"></i>
+                                        </div>
+
+                                    </li>
+                                    }
+                                    @if (filteredCars.length === 0 && searchCarButtonTouched === true) {
+                                    <li class="list-group-item text-center text-muted">No hay autos para mostrar.</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SECCION DE SELECCION/ CREACION DE CLIENTE -->
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="selection-card p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <h5 class="section-title mb-0">{{ isNewClient ? 'Crear cliente' : 'Seleccionar cliente' }}</h5>
+                                        <small class="text-muted">
+                                            {{ isNewClient ? 'Completa los datos para crear un cliente nuevo' : 'Buscar por nombre o DNI' }}
+                                        </small>
+                                    </div>
+                                    <button class="btn btn-sm"
+                                        [ngClass]="isNewClient ? 'btn-outline-secondary' : 'btn-outline-primary'"
+                                        (click)="toggleNewClient()">
+                                        {{ isNewClient ? 'Volver a existente' : 'Crear cliente nuevo' }}
+                                    </button>
+                                </div>
+
+                                <!-- Modo: seleccionar cliente -->
+                                @if(!isNewClient) {
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" [(ngModel)]="clientSearchInput"
+                                        (keydown.enter)="searchClients()">
+                                    <button class="btn btn-outline-dark" (click)="searchClients()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+
+                                <ul class="list-group client-list">
+                                    @for (client of filteredClients; track $index) {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                                        [class.active]="client.id === selectedClientId" (click)="selectClient(client)">
+                                        <div class="d-flex flex-column">
+                                            <div class="fw-semibold">
+                                                {{ client.lastName }}, {{ client.name }}
+                                            </div>
+                                            <div class="text-muted small license-plate">({{ client.dni }})</div>
+                                        </div>
+
+                                        @if (client.id === selectedClientId) {
+                                        <i class="fas fa-check check-icon"></i>
+                                        }
+                                    </li>
+                                    }
+                                    @if (filteredClients.length === 0 && searchClientButtonTouched === true) {
+                                    <li class="list-group-item text-center text-muted">No hay clientes para mostrar.
+                                    </li>
+                                    }
+                                </ul>
+                                } @else {
+                                <!-- Modo: crear cliente (form reactivo) -->
+                                <form [formGroup]="newClientForm" class="mt-2">
+                                    <div class="row g-3">
+                                        <!-- NOMBRE -->
+                                        <div class="col-md-6">
+                                            <label for="clientName" class="form-label">Nombre</label>
+                                            <input id="clientName" formControlName="clientName" class="form-control"
+                                                [ngClass]="{'is-invalid': newClientForm.get('clientName')?.invalid && newClientForm.get('clientName')?.touched}" />
+
+                                            <!-- ERRORES -->
+                                            @if(newClientForm.get('clientName')?.invalid &&
+                                            newClientForm.get('clientName')?.touched) {
+                                            @if(newClientForm.get('clientName')?.hasError('required')) {
+                                            <div class="text-danger">Nombre requerido</div>
+                                            }
+                                            @if(newClientForm.get('clientName')?.hasError('maxlength')) {
+                                            <div class="text-danger">Demasiados caracteres</div>
+                                            }
+                                            }
+                                        </div>
+
+                                        <!-- APELLIDO -->
+                                        <div class="col-md-6">
+                                            <label for="clientLastName" class="form-label">Apellido</label>
+                                            <input id="clientLastName" formControlName="clientLastName"
+                                                class="form-control"
+                                                [ngClass]="{'is-invalid': newClientForm.get('clientLastName')?.invalid && newClientForm.get('clientLastName')?.touched}" />
+
+                                            <!-- ERRORES -->
+                                            @if(newClientForm.get('clientLastName')?.invalid &&
+                                            newClientForm.get('clientLastName')?.touched) {
+                                            @if(newClientForm.get('clientLastName')?.hasError('required')) {
+                                            <div class="text-danger">Apellido requerido</div>
+                                            }
+                                            @if(newClientForm.get('clientLastName')?.hasError('maxlength')) {
+                                            <div class="text-danger">Demasiados caracteres</div>
+                                            }
+                                            }
+                                        </div>
+
+                                        <!-- TELEFONO -->
+                                        <div class="col-md-6">
+                                            <label for="clientPhone" class="form-label">Teléfono</label>
+                                            <input id="clientPhone" formControlName="clientPhone" class="form-control"
+                                                [ngClass]="{'is-invalid': newClientForm.get('clientPhone')?.invalid && newClientForm.get('clientPhone')?.touched}" />
+
+                                            <!-- ERRORES -->
+                                            @if(newClientForm.get('clientPhone')?.invalid &&
+                                            newClientForm.get('clientPhone')?.touched) {
+                                            @if(newClientForm.get('clientPhone')?.hasError('required')) {
+                                            <div class="text-danger">Celular requerido</div>
+                                            }
+                                            @if(newClientForm.get('clientPhone')?.hasError('repeatedPhoneError')) {
+                                            <div class="text-danger">Ya existe un cliente con ese número</div>
+                                            }
+                                            }
+                                        </div>
+
+                                        <!-- DNI -->
+                                        <div class="col-md-6">
+                                            <label for="clientDni" class="form-label">DNI</label>
+                                            <input id="clientDni" formControlName="clientDni" class="form-control"
+                                                [ngClass]="{'is-invalid': newClientForm.get('clientDni')?.invalid && newClientForm.get('clientDni')?.touched}" />
+
+                                            <!-- ERRORES -->
+                                            @if(newClientForm.get('clientDni')?.invalid &&
+                                            newClientForm.get('clientDni')?.touched) {
+                                            @if(newClientForm.get('clientDni')?.hasError('required')) {
+                                            <div class="text-danger">Dni requerido</div>
+                                            }
+                                            @if(newClientForm.get('clientDni')?.hasError('pattern')) {
+                                            <div class="text-danger">Dni inválido</div>
+                                            }
+                                            @if(newClientForm.get('clientDni')?.hasError('repeatedDniError')) {
+                                            <div class="text-danger">Ya existe un cliente con ese dni</div>
+                                            }
+                                            }
+                                        </div>
+                                    </div>
+                                </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-end">
+
+                        <!-- Spinner de carga -->
+                        <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+
+                        <!-- CANCELAR -->
+                        <button type="button" class="btn btn-secondary me-2" (click)="cancel()">Cancelar</button>
+
+                        <!-- ENVIAR -->
+                        <button class="btn btn-block custom-btn" (click)="confirmSale()">Registrar
+                            venta</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

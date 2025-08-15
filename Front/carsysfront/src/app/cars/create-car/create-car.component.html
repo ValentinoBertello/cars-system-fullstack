@@ -1,0 +1,210 @@
+<div class="container mt-3">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+            <i class="fas fa-car me-3" style="font-size: 2rem; color: #fff;">
+            </i>
+            <h4 class="mb-0">Registrar nuevo auto</h4>
+        </div>
+        <div class="card-body">
+
+            <!-- FORMULARIO -->
+            <form class="" [formGroup]="formReactivo" (ngSubmit)="onSubmitForm()">
+                <div class="p-4 border rounded">
+
+                    <div class="row">
+
+                        <!-- MARCA -->
+                        <div class="col-md-6 mb-3">
+                            <label for="brand" class="form-label">Marca *</label>
+                            <select (change)="changeModels($event)" id="brand" class="form-select"
+                                formControlName="brandId"
+                                [ngClass]="{'is-invalid': formReactivo.get('brandId')?.invalid && formReactivo.get('brandId')?.touched}">
+                                <option value="" selected>Elige una Marca</option>
+                                @for (m of selectBrands; track $index) {
+                                <option [value]="m.name">{{m.name}}</option>
+                                }
+                            </select>
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('brandId')?.invalid && formReactivo.get('brandId')?.touched) {
+                            @if(formReactivo.get('brandId')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Marca requerida</div>
+                            }
+                            }
+
+                        </div>
+
+                        <!-- MODELO -->
+                        <div class="col-md-6 mb-3">
+                            <label for="model" class="form-label">Modelo *</label>
+                            <select id="model" class="form-select" formControlName="modelId"
+                                [ngClass]="{'is-invalid': formReactivo.get('modelId')?.invalid && formReactivo.get('modelId')?.touched}">
+                                <option value="" selected>Elige un Modelo</option>
+                                @for (m of selectModels; track $index) {
+                                <option [value]="m.id">{{m.name}}</option>
+                                }
+                            </select>
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('modelId')?.invalid && formReactivo.get('modelId')?.touched) {
+                            @if(formReactivo.get('modelId')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Modelo requerido</div>
+                            }
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <!-- PATENTE -->
+                        <div class="col-md-6 mb-3">
+                            <label for="patente" class="form-label">
+                                Patente * <small class="text-muted">(sin espacios)</small>
+                            </label>
+                            <input type="text" class="form-control" formControlName="licensePlate"
+                                [ngClass]="{'is-invalid': formReactivo.get('licensePlate')?.invalid && formReactivo.get('licensePlate')?.touched}">
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('licensePlate')?.invalid && formReactivo.get('licensePlate')?.touched)
+                            {
+                            @if(formReactivo.get('licensePlate')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Patente requerida</div>
+                            }
+                            @if(formReactivo.get('licensePlate')?.hasError('pattern')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Patente inválida</div>
+                            }
+                            @if(formReactivo.get('licensePlate')?.hasError('repeatedLicensePlateError')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Esa patente ya está registrada
+                            </div>
+                            }
+                            }
+
+                        </div>
+
+                        <!-- AÑO -->
+                        <div class="col-md-6 mb-3">
+                            <label for="anio" class="form-label">Año *</label>
+                            <input type="number" class="form-control" formControlName="year"
+                                [ngClass]="{'is-invalid': formReactivo.get('year')?.invalid && formReactivo.get('year')?.touched}">
+
+                            <!-- ERRORES     -->
+                            @if(formReactivo.get('year')?.invalid && formReactivo.get('year')?.touched) {
+                            @if(formReactivo.get('year')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Año requerido</div>
+                            }
+                            @if(formReactivo.get('year')?.hasError('min')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Año demasiado antiguo</div>
+                            }
+                            @if(formReactivo.get('year')?.hasError('max')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Año demasiado alto</div>
+                            }
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <!-- PRECIO -->
+                        <div class="col-md-4 mb-3">
+                            <label for="precio" class="form-label">Precio *</label>
+                            <div class="position-relative">
+                                <input currencyMask
+                                    [options]="{prefix: '', thousands: '.', precision: 0, align: 'left'}" type="text"
+                                    id="precio" class="form-control ps-4" formControlName="basePrice" [ngClass]="{'is-invalid': formReactivo.get('basePrice')?.invalid && formReactivo.get('basePrice')?.touched
+                                }" />
+
+                                <span class="position-absolute top-50 start-0 translate-middle-y text-muted ps-2"
+                                    style="pointer-events: none;">
+                                    $
+                                </span>
+
+                            </div>
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('basePrice')?.invalid && formReactivo.get('basePrice')?.touched) {
+                            @if(formReactivo.get('basePrice')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Precio requerido</div>
+                            }
+                            @if(formReactivo.get('basePrice')?.hasError('min')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Precio muy bajo</div>
+                            }
+                            @if(formReactivo.get('basePrice')?.hasError('max')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Precio muy alto</div>
+                            }
+                            }
+                        </div>
+
+                        <!-- KILOMETROS -->
+                        <div class="col-md-4 mb-3">
+                            <label for="kilometraje" class="form-label">Kilometraje *</label>
+                            <div class="position-relative">
+                                <input currencyMask
+                                    [options]="{prefix: '', thousands: '.', precision: 0, align: 'left'}" type="text"
+                                    class="form-control pe-4" formControlName="mileage">
+
+                                <span class="position-absolute top-50 end-0 translate-middle-y text-muted pe-2"
+                                    style="pointer-events: none;">
+                                    km
+                                </span>
+                            </div>
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('mileage')?.invalid && formReactivo.get('mileage')?.touched) {
+                            @if(formReactivo.get('mileage')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Kilometraje requerido</div>
+                            }
+                            @if(formReactivo.get('mileage')?.hasError('min')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Kilometraje demasiado bajo
+                            </div>
+                            }
+                            @if(formReactivo.get('mileage')?.hasError('max')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Kilometraje demasiado alto
+                            </div>
+                            }
+                            }
+
+                        </div>
+
+                        <!-- COLOR -->
+                        <div class="col-md-4 mb-3">
+                            <label for="color" class="form-label">Color *</label>
+                            <select id="color" class="form-select" formControlName="color"
+                                [ngClass]="{'is-invalid': formReactivo.get('color')?.invalid && formReactivo.get('color')?.touched}">
+                                <option value="" selected>Elige un Color</option>
+                                @for (c of colorsSelect; track $index) {
+                                <option [value]="c">{{c}}</option>
+                                }
+                            </select>
+
+                            <!-- ERRORES -->
+                            @if(formReactivo.get('color')?.invalid && formReactivo.get('color')?.touched) {
+                            @if(formReactivo.get('color')?.hasError('required')) {
+                            <div class="text-danger align-self-end" style="width: 500px;">Color requerido</div>
+                            }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+
+                    <!-- Spinner de carga -->
+                    <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- CANCELAR -->
+                    <button type="button" class="btn btn-secondary me-2" (click)="clean()">Cancelar</button>
+
+                    <!-- ENVIAR -->
+                    <button type="submit" [disabled]="formReactivo.invalid" class="btn btn-block custom-btn">Guardar
+                        auto</button>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

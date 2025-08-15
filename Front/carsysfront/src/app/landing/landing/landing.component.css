@@ -1,0 +1,77 @@
+:host {
+  display: block;
+}
+
+/* Paleta: negro y acento cian */
+.landing-hero {
+  background: linear-gradient(180deg, #000, #0f0f0f);
+}
+
+.accent {
+  color: #04dbf7;
+}
+
+/* Cards */
+.landing-cards .card {
+  background: #0f0f0f;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.landing-cards .card .accent {
+  font-size: 1.05rem;
+}
+
+/* Stats */
+.landing-stats {
+  background: linear-gradient(180deg, #0b0b0b, #0f0f0f);
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+/* Footer */
+.landing-footer {
+  background: #0b0b0b;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #04dbf7;
+  border-color: #04dbf7;
+  color: #000;
+  font-weight: 600;
+}
+
+.padding-pers {
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+
+.link-aqua {
+  color: aqua;
+}
+
+.link-aqua:hover,
+.link-aqua:focus {
+  color: #00e5e5;
+  /* un poquito más oscuro */
+}
+
+/* Responsivo pequeño */
+@media(max-width:767.98px) {
+  .landing-hero .lead {
+    font-size: 0.95rem;
+  }
+
+  .mock-screenshot {
+    height: 120px;
+  }
+}
+
+.landing-cards {
+  margin-top: clamp(20px, 6vh, 140px);
+  transition: margin-top 0.35s ease;
+}

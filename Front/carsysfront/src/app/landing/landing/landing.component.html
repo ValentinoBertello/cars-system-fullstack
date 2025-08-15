@@ -1,1 +1,69 @@
-<p>landing works!</p>
+<!-- landing.component.html - versión simple para portfolio -->
+<section class="landing-hero padding-pers text-light">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <h1 class="display-6 mb-3">CarSys — Gestión simple para concesionarias</h1>
+        <p class="lead mb-4">
+          Interfaz pensada para administrar autos, clientes y ventas de forma clara y rápida.
+          Ideal para uso gerencial o para mostrar en tu portfolio.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <a (click)="requireAuthNavigate('/car/list')" class="btn btn-outline-light btn-sm" role="button">Ver autos</a>
+          <a (click)="requireAuthNavigate('/sale/list')" class="btn btn-outline-light btn-sm" role="button">Ver
+            ventas</a>
+          <a (click)="requireAuthNavigate('/client/list')" class="btn btn-outline-light btn-sm" role="button">Ver
+            clientes</a>
+          <a (click)="requireAuthNavigate('/car/create')" class="btn btn-primary btn-sm" role="button">Agregar auto</a>
+        </div>
+
+        <ul class="list-unstyled small">
+          <li><i class="fas fa-check-circle accent me-2"></i>Filtros y paginación en listas</li>
+          <li><i class="fas fa-check-circle accent me-2"></i>Formularios reactivos con validaciones</li>
+          <!-- <li><i class="fas fa-check-circle accent me-2"></i>Exportar a PDF / Excel</li> -->
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="landing-cards py-4">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body" style="color: white;">
+            <h6 class="card-title mb-2"><i class="fas fa-car me-2 accent"></i>Autos</h6>
+            <p class="card-text small">Listados con filtros por marca/modelo, edición rápida y exportación.</p>
+            <a (click)="requireAuthNavigate('/car/list')" class="link-aqua small text-decoration-none" role="button">Ir
+              a autos →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body" style="color: white;">
+            <h6 class="card-title mb-2"><i class="fas fa-user-tie me-2 accent"></i>Clientes</h6>
+            <p class="card-text small">Búsqueda por DNI/nombre y vista rápida de ventas del cliente.</p>
+            <a (click)="requireAuthNavigate('/client/list')" class="link-aqua small text-decoration-none"
+              role="button">Ir a clientes →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body" style="color: white;">
+            <h6 class="card-title mb-2"><i class="fas fa-money-bill-wave me-2 accent"></i>Ventas</h6>
+            <p class="card-text small">Registrar ventas, seleccionar auto/cliente y emitir comprobantes.</p>
+            <a (click)="requireAuthNavigate('/sale/list')" class="link-aqua small text-decoration-none" role="button">Ir
+              a ventas →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

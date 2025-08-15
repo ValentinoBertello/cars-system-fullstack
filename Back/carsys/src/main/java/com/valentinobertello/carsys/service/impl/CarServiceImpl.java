@@ -15,12 +15,14 @@ import com.valentinobertello.carsys.repository.car.CarRepository;
 import com.valentinobertello.carsys.repository.car.ModelRepository;
 import com.valentinobertello.carsys.repository.specifications.CarSpecifications;
 import com.valentinobertello.carsys.service.CarService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +57,7 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     @Transactional
-    public CarResponse createCar(PostCarDto carRequest) {
+    public CarResponse createCar(PostCarDto carRequest, String username) {
         ModelEntity model = modelRepository.findById(carRequest.getModelId())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Modelo no encontrado con ID: " + carRequest.getModelId()));
@@ -63,6 +65,17 @@ public class CarServiceImpl implements CarService {
         UserEntity user = userRepository.findByEmail(carRequest.getUserEmail())
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Usuario no encontrado con email: " + carRequest.getUserEmail()));
+
+        // Comprobación de propietario
+        if (!carRequest.getUserEmail().equals(username)) {
+            throw new RuntimeException("No tienes permiso para guardar este vehículo");
+        }
+
+        // Comprobación de patente
+        if (carRepository.existsByLicensePlate(carRequest.getLicensePlate())) {
+            throw new EntityExistsException(
+                    "La patente '" + carRequest.getLicensePlate() + "' ya está registrada");
+        }
 
         //Mapeamos el PostCarDto a "carEntity"
         CarEntity newCar = carDataMapper.mapCarRequestToCarEntity(carRequest, model, user);
@@ -75,6 +88,7 @@ public class CarServiceImpl implements CarService {
      * Edita ciertos datos de un auto en particular.
      */
     @Override
+    @Transactional
     public CarResponse updateCar(UpdateCarDto carRequest, String username) {
         CarEntity carBd = this.carRepository.findById(carRequest.getId()).orElseThrow(() -> new EntityNotFoundException(
                 "Auto no encontrado."));
@@ -85,7 +99,6 @@ public class CarServiceImpl implements CarService {
         }
 
         carBd.setBasePrice(carRequest.getBasePrice());
-        carBd.setColor(carRequest.getColor());
         carBd.setMileage(carRequest.getMileage());
         carBd = this.carRepository.save(carBd);
 
@@ -99,7 +112,7 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<CarResponse> searchCarsByFilters(String licensePlate,
+    public Page<CarResponse> getCarsPageByFilters(String licensePlate,
                                                  String brand,
                                                  String model,
                                                  String username,
@@ -111,9 +124,22 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
+     * Busca coches del usuario autenticado según un término de búsqueda.
+     * El parámetro `carQuery` se compara contra campos relevantes como por ejemplo:
+     * patente, marca o modelo.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<CarResponse> getCarsByFilters(String carQuery, String name) {
+        List<CarEntity> carEntities = this.carRepository.findByCarQuery(carQuery);
+        return this.carDataMapper.mapCarEntitiesToCarResponses(carEntities);
+    }
+
+    /**
      * Devuelve todos los modelos de vehículos.
      */
     @Override
+    @Transactional(readOnly = true)
     public List<ModelResponse> getAllModels() {
         return this.modelRepository.findAll().stream()
                 .map(model -> ModelResponse.builder()
@@ -128,8 +154,18 @@ public class CarServiceImpl implements CarService {
      * Devuelve todas las marcas de vehículos.
      */
     @Override
+    @Transactional(readOnly = true)
     public List<BrandEntity> getAllBrands() {
         return this.brandRepository.findAll();
+    }
+
+    /**
+     * Devuelve true si la patente ya existe y false si no existe
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean existsLicensePlate(String licensePlate, String name) {
+        return carRepository.existsByLicensePlateAndUserEmail(licensePlate, name);
     }
 
 }
