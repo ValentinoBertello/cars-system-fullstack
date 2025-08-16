@@ -1,5 +1,5 @@
 # 🚗 Carsys - Gestión para Concesionario
-Sistema web de gestión básica para concesionarios, enfocado en el manejo interno de clientes, vehículos y ventas.
+Sistema web de gestión para concesionarios, enfocado en el manejo interno de clientes, vehículos y ventas.
 
 ### Tecnologías utilizadas
 **Frontend:** Angular 18+  
